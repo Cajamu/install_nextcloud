@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+#
+# Installation script nextcloud including (some) dependencies
+#
 apt -y update
 #apt -y upgrade
 apt-get -y install apache2 libapache2-mod-php mariadb-server php-xml php-cli php-cgi php-mysql php-mbstring php-gd php-curl php-zip wget unzip php-intl php-bcmath php-gmp php-imagick
@@ -50,7 +54,7 @@ a2enmod mime
 mkdir /nextcloud
 mv /var/www/html/nextcloud/data /nextcloud
 systemctl restart apache2
-echo "Datei /tmp/konf mit weiteren Anweisungen wird erstellt"
+echo "Generating file /tmp/instructions containing further instructions..."
 echo "#MariaDB
 CREATE DATABASE nextclouddb;
 CREATE USER 'nextclouduser'@'localhost' IDENTIFIED BY 'password';
@@ -58,6 +62,15 @@ GRANT ALL ON nextclouddb.* TO 'nextclouduser'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 
-#Data Änderungen
-vi /var/www/html/nextcloud/config/config.php
- 'datadirectory' auf '/nextcloud/data' ändern" >> /tmp/konf
+#Nextcloud conf
+Connect to YourServerIP/nextcloud
+Create admin account
+#
+#!Change your data folder location! Do not use a folder under /var/www/html!
+#
+Input your MariaDB data
+
+Finish setup" >> /tmp/instructions
+
+echo "Done."
+
