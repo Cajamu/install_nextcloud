@@ -19,10 +19,12 @@ date.timezone = Europe/Berlin" >> /etc/php/7.3/apache2/php.ini
 cd /var/www/html/
 wget https://download.nextcloud.com/server/releases/latest.zip
 unzip latest.zip
+mkdir -p /nextcloud/data
+chown -R www-data:www-data /nextcloud/
+chmod -R 755 /nextcloud/
 chown -R www-data:www-data /var/www/html/nextcloud/
 chmod -R 755 /var/www/html/nextcloud/
 rm -f latest.zip
-touch /etc/apache2/sites-available/nextcloud.conf
 echo "<VirtualHost *:80>
      ServerAdmin admin@example.com
      DocumentRoot /var/www/html/nextcloud/
@@ -44,15 +46,13 @@ echo "<VirtualHost *:80>
      ErrorLog ${APACHE_LOG_DIR}/error.log
      CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-</VirtualHost>" >> /etc/apache2/sites-available/test.conf
+</VirtualHost>" >> /etc/apache2/sites-available/nextcloud.conf
 a2ensite nextcloud.conf
 a2enmod rewrite
 a2enmod headers
 a2enmod env
 a2enmod dir
 a2enmod mime
-mkdir /nextcloud
-mv /var/www/html/nextcloud/data /nextcloud
 systemctl restart apache2
 echo "Generating file /tmp/instructions containing further instructions..."
 echo "#MariaDB
